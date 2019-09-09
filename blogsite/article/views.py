@@ -105,7 +105,7 @@ def info(request,uid,page):
             column_name = i.column_name
             context_c.append({'column_name': column_name, 'cid': cid, 'num': num, 'sort': sort})
 
-        articles = articles.order_by('weight', '-uptime')
+        articles = articles.order_by('-uptime')
         cids = articles.values_list('cid', flat=True)
         column = dict([(i.cid, i.column_name) for i in ArticleColumn.objects.filter(cid__in=cids)])
         context = []

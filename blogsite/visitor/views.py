@@ -11,13 +11,17 @@ def article_list(request,page):
     print '博客首页'
     s = request.get_full_path()
     s = str(s)
-    print s
-    print type(s)
     pindex = s.split('/')[2].split('.')[0].split('p')[1]
     post_info = request.POST
     search = post_info.get('search')
     column = post_info.get('column')
-    articles = Article.objects.all()
+    try:
+        aid_t1 = TopArticle.objects.all().order_by('-id')[0].aid
+        article_t = Article.objects.get(aid=aid_t1)
+        articles = Article.objects.exclude(aid=aid_t1)
+    except:
+        articles = Article.objects.all()
+
     if search:
         author = User.objects.filter(username=search)
         articles = articles.filter(Q(uid__in=[i.id for i in author])|
@@ -25,7 +29,7 @@ def article_list(request,page):
     context = []
     if column:
         articles = articles.filter(cid=column)
-    articles = articles.order_by('weight','-uptime')
+    articles = articles.order_by('-uptime')
     if pindex:
         pindex = int(pindex)
     else:
@@ -124,6 +128,7 @@ def article_list(request,page):
         context_top = {'aid': aid_t, 'author': author, 'column': column, 'title': title,
                             'content': content, 'summary': summary, 'addtime': addtime,
                             'like_num': like_num, 'comment_count': comment_count, 'uid': uid_t, 'cid': cid_t}
+
         return render(request, 'article_list.html', {'context': context, 'page_num': pages, 'pindex': pindex,
                                                  'context_c': context_c, 'context_top': context_top
                                                  })  # 博客首页展示

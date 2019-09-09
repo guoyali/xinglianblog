@@ -12,6 +12,7 @@
             <div class="post-list">
             {% load url from future %}
                 {% if context|wordcount > 1 %}
+                    {% if pindex == 1 %}
 
                <article class="meta">
                         <header>
@@ -34,6 +35,7 @@
                             <span class="comments">{{ context_top.comment_count }} 条评论</span>
                             <span class="hr"></span><span class="likes">{{ context_top.like_num }} 人喜欢</span></footer>
                     </article>
+                        {% endif %}
 
 
                     {% for i in context %}

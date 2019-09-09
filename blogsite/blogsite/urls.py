@@ -3,11 +3,11 @@ from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 from article.models import *
-admin.site.register(Article)
-admin.site.register(UserComment)
-admin.site.register(ArticleColumn)
-admin.site.register(ArticleLike)
-admin.site.register(LikeCount)
+# admin.site.register(Article)
+# admin.site.register(UserComment)
+# admin.site.register(ArticleColumn)
+# admin.site.register(ArticleLike)
+# admin.site.register(LikeCount)
 from blogsite import settings
 from article import views
 from django.views.generic import RedirectView
